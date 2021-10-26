@@ -1,16 +1,28 @@
-const  https = require('https')
-const path = require('path')
-
-console.log('Starting')
-
-
-setTimeout(() => {
-    console.log('2 Second Timer')
-}, 2000)
-
-setTimeout(() => {
-    console.log('0 Second Timer')
-}, 0)
+const request = require('request')
+const geocode = require('./utils/geocode')
+const forecast = require('./utils/forecast')
 
 
-console.log('Stopping')
+const location = process.argv[2]
+
+if (!location)
+{
+    return console.log('No Location Given')
+}
+
+geocode(location, (error, { latitude, longitude, location } = {}) => {
+    if (error) {
+        return console.log(error)
+    }
+
+    forecast(latitude, longitude, (error, forecastData) => {
+        if (error) {
+            return console.log(error)
+        }
+
+        console.log(location)
+        console.log(forecastData)
+
+      })
+})
+

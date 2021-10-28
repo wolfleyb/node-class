@@ -36,10 +36,11 @@ app.get('/about', (req, res) => {
 
 app.get('/help', (req, res) => {
     res.render('help', {
-        helpText: 'This is some helpful text.'
+        helpText: 'This is some helpful text.',
+        title: 'Help',
+        name: 'Ben Wolfley'
     })
 })
-
 
 app.get('/weather', (req, res) => {
     res.send({
@@ -48,11 +49,23 @@ app.get('/weather', (req, res) => {
     })
 })
 
-// app.com
-// app.com/help
-// app.com/about
+errorTemplate = 'fourofour'
 
+app.get('/help/*', (req, res) => {
+    res.render(errorTemplate, {
+        title: '404',
+        name: 'Ben Wolfley',
+        errorData: 'Help article not found'
+    })
+})
 
+app.get('*', (req, res) => {
+    res.render(errorTemplate, {
+        title: '404',
+        name: 'Ben Wolfley',
+        errorData: 'Page not found'
+    })
+})
 
 app.listen(3000, () => {
     console.log('Server is up on port 3000.')
